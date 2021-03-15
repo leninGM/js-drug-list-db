@@ -1,4 +1,4 @@
-// 1. Primero hay creamos la clase Drogas la cual sera la encargada de crear los objectos con la info de las drogas
+// Primero creamos la clase Drogas la cual sera la encargada de crear los objectos con la info de las drogas, cada objeto necesita un id para poder ser editado
 class Drogas {
   constructor(nombre, url, pais, efectos, id) {
     this.id = id !== "" ? Number(id) : this.id()
@@ -23,9 +23,9 @@ class Drogas {
   }
 }
 
-//2. Esta clase se encarga del registro en el localStorage
+// Esta clase se encarga del registro en el localStorage y tiene varias  funciones para el crud de los  records
 class Registros {
-  registrarNuevoRegistro(registro) {
+  crearNuevoRegistro(registro) {
     if(this.validarBrowser) {
       if (localStorage.listaDeRegistros) {
         var registros = JSON.parse(localStorage.listaDeRegistros);
@@ -110,7 +110,7 @@ class Registros {
     return null
   }
 
-  // esta funcion elimina el registro que mandamos como parametro del array de registros
+  // esta funcion elimina el registro el cual llega como parametro
   eliminarRegistro(registro) {
     var registros = JSON.parse(localStorage.listaDeRegistros);
     registros = registros.filter((obj)=>{
@@ -128,18 +128,22 @@ class Registros {
     return true
   }
 
-  // Validamos el browser para saber si soporta el localStorage
+  // Esta funcion valida el browser para saber si soporta el localStorage, retorna true o false
   validarBrowser() {
-    if (typeof(Storage) !== "undefined") return true;
-    return false;
+    return typeof(Storage) !== "undefined"
   }
 
-  // esta funcion sirve para poner los valores del registro que queremos registrar en el formulario
+  // esta funcion sirve para poner los valores del registro que queremos editar en el formulario
   editarRegistro(registro){
     var registros = JSON.parse(localStorage.listaDeRegistros);
     // limpiamos el formulario para evitar errores
     limpiarFormulario()
 
+    // la  variable i  es el indice actual de la iteracion,
+    // primero obtenemos el objeto y buscamos el id  que  sea igual al id del registro que  vamos a actualizar
+    // cuando lo encuentra, entonces saca sus atributos y los guarda en variables
+    // esas variables las guarda en su respectiivo campo
+    // y por ultimo le cambiamos  el nombre al boton para que se entienda  que se va a actualizar un registro
     for(let i in registros){
       if(registros[i].id == registro.id) {
         let nombre = registro.nombre;
@@ -164,13 +168,14 @@ class Registros {
     let registros = JSON.parse(localStorage.listaDeRegistros);
 
     for(let i in registros){
-      // actualizamoss el objeto
+      // buscamos el objeto que haya matcho con el id  que queremos actualizar
+      // una vez que ya se encontro, se le asigna el nuevo objeto actualizado a la posicion con la que hizo match
       if(registros[i].id === registro.id){
         registros[i] = registro;
       }
     }
 
-    // guardamos en el storage
+    // y se manda el  array con objeto actualizado al  localStorage
     localStorage.listaDeRegistros = JSON.stringify(registros);
 
     // Actualizamos la tabla
@@ -182,7 +187,7 @@ class Registros {
   }
 }
 
-// 3. Esta funcion se ejecuta cada que se hace un submit del formulario, en ella se crea un objeto de la clase Drogas con la informacion que obtenemos de los campos del formulario, y despues este objeto lo guardamos en el active storage
+// Esta funcion se ejecuta cada que se hace un submit del formulario, en ella se crea un objeto de la clase Drogas con la informacion que obtenemos de los campos del formulario, y despues este objeto lo guardamos en el active storage
 const registro = (e) => {
   e.preventDefault();
 
@@ -205,7 +210,7 @@ const registro = (e) => {
     return;
   }
 
-  registros.registrarNuevoRegistro(registro);
+  registros.crearNuevoRegistro(registro);
 
   registros.mostrarListaDeRegistros();
 
