@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+  <title>Document</title>
+</head>
+<body>
+  <div class="container">
+    <header class="text-center mt-4 mb-5">
+      <h1>Captura de Registro de Drogas</h1>
+    </header>
+    <div class="row">
+      <div class="col-md-5">
+        <div class="text-center"><h2>Drogas Ilicitas</h2></div>
+        <form id="form">
+          <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre</label>
+            <input type="text" class="form-control" id="nombre" placeholder="Cocaína">
+            <input type="hidden" class="form-control" id="registroId">
+          </div>
+          <div class="mb-3">
+            <label for="url" class="form-label">URL de fotografía</label>
+            <input type="text" class="form-control" id="url" placeholder="http://...">
+          </div>
+          <div class="mb-3">
+            <label for="pais" class="form-label">Principal pais productor</label>
+            <input type="text" class="form-control" id="pais" placeholder="México">
+          </div>
+          <div class="mb-3">
+            <label for="efectos" class="form-label">Efectos que causa a los humanos</label>
+            <textarea class="form-control" id="efectos" rows="3"></textarea>
+          </div>
+
+          <div class="col-md-12">
+            <button class="btn btn-primary" type="submit" id="guardar">Crear registro</button>
+            <a href="#" class="btn btn-danger" id="eliminarTodos">Eliminar todos</a>
+          </div>
+        </form>
+      </div>
+      <div class="col-md-7">
+        <div class="text-center"><h2>Drogas registradas</h2></div>
+
+        <table class="table table-striped" id="tabla">
+          <thead>
+            <tr>
+              <th scope="col">Nombre</th>
+              <th scope="col">URL de fotografía</th>
+              <th scope="col">Principal pais productor</th>
+              <th scope="col">Efectos en humanos</th>
+              <th scope="col" colspan="2">Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+  <script src="./main.js"></script>
+  <script>
+    const form = document.getElementById('form');
+    const eliminarTodos = document.getElementById('eliminarTodos');
+    form.onsubmit = registro;
+    eliminarTodos.onclick = destruirRegistros;
+
+    let tabla = new Registros
+    tabla.mostrarListaDeRegistros();
+  </script>
+</body>
+</html>
